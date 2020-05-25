@@ -16,46 +16,23 @@ import java.sql.*;
 public class Conexion {
     
     private Connection conexion=null;
-    private String servidor="";
-    private String database="";
-    private String usuario="";
-    private String password="";
-    private String url="";
-    private String cliente;
+    private Cliente cliente;
     
-    public Conexion(String servidor, String database, String usuario, String password){
-        try {
- 
-            this.servidor = servidor;
-            this.database = database;
- 
-            Class.forName("com.mysql.jdbc.Driver");
-            url="jdbc:mysql://"+servidor+"/"+database;
-            conexion=DriverManager.getConnection(url, usuario, password);
-            Statement statement = conexion.createStatement();
-            System.out.println("Conexion a Base de Datos "+url+" . . . . .Ok");
- 
-        }
-        catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        catch (ClassNotFoundException ex) {
-            System.out.println(ex);
-        }
+    public Conexion(){
+        conectarBD();
     }
     
-    public Connection getConexion(){
-        return conexion;
-    }
- 
-    public Connection cerrarConexion(){
-        try {
-            conexion.close();
-             System.out.println("Cerrando conexion a "+url+" . . . . . Ok");
-        } catch (SQLException ex) {
-            System.out.println(ex);
+    public void conectarBD(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         }
-        conexion=null;
-        return conexion;
+        catch(ClassNotFoundException | InstantiationException | IllegalAccessException ex){
+            
+            System.out.println("ERROR:No fue posible cargar el driver JDBC"+ ex.getLocalizedMessage());
+            System.exit(1);
+        }
+        String 
     }
+    
+   
 }
